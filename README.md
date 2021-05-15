@@ -19,29 +19,65 @@ The dataset provided contains data related to a direct marketing campaign for a 
 
 
 ## Key Steps
-*TODO*: Write a short discription of the key steps. Remeber to include all the screenshots required to demonstrate key steps. 
-* **Authentication**
+### **Authentication**
+Since the lab provided was through Udacity VM, this step was not performed. However, when working on our own Azure credentials, this is a very critical step. Authentication is required to prevent  the interruption of the CI/CD flow. There are three types of Authentication:
+1. Key-based:
+* Azure Kubernetes service enabled by default
+* Azure Container Instances service disabled by default
+
+2. Token-based:
+* Azure Kubernetes service disabled by default
+* Not support Azure Container Instances
+
+3. Interactive:
+* Used by local deployment and experimentation (e.g. using Jupyter notebook)
+
+* Service Principal: A user role with controlled permissions to access specific resources. This enables a continous delivery platform to authenticate services needed to train models. 
 
 
-* **Automated ML Experiment**
+### **Automated ML Experiment**
+At first the data needed to be uploaded and registered: 
+![diagram](img/registerd_dataset.png)
+After that a new compute cluster was setup using the _Standard_DS12_v2_ selection.  Then the AutoML experiment was create with the selections as shown in the screenshot below:
+![diagram](img/automl_experiment.png)
+The experiment runs for about 15 mins and then once it was completed the best model was selected for deployment:
+![diagram](img/completed_automl.png)
+![diagram](img/best_model.png)
+
+### **Deploying the best model**
+After the experiment run was completed, the best model _VotingEnsemble_ was deployed using Azure Container Instance (ACI). Deploying the model in Azure allows us to interact with the HTTP API service and interact with the model by sending data over  POST request. 
 
 
-* **Deploying the best model**
+### **Enable Logging**
+Although it was possible to enable application insights at deplot time with a check-box, it is useful to be able to run a code that will enable it for us. The [logs.py](logs.py) was used to enable the application insights, however, we have to download the _config.json_ file from ML studio and place it within the same directory as logs.py before runing the python script. The following screenshots shows the output after runing logs.py the application insights on ML studio is enabled. 
+![diagram](img/logs.py_output_1.png)
+![diagram](img/logs.py_output_2.png)
+![diagram](img/enabled_application_insights.png)
+Homepage of the application insights where it shows different metrics such as failed requests, server response time...etc:
+![diagram](img/application_insights.png)
+
+### **Swagger Documentation**
+In this step, we consume the deployed model using Swagger. Azure provides a Swagger JSON link which can be downloaded through _curl_ or _wget_. Once the swagger.json was downloaded it was placed within the same directory "swagger". Running [```swagger.sh```](swagger.sh) will download the latest swagger container and it will run it on port 80. After that, the [```serve.py```](serve.py) script was run which starts a python server on port 8000. 
+Opening the brower and going to the localhost:9000 will open up the swagger sample. By typing _http://localhost:8000/swagger.json_ will display the contents of the API for our model:
+![diagram](img/swagger_api.png)
+![diagram](img/get_request.png)
+![diagram](img/post_request.png)
+
+### **Consuming Model Endpoint**
+To interact with the deployed model, the endpoint.py script was created. The ```scoring_uri``` and the ```key``` must match the _REST_endpoint_ and _primary key_ in the consume tab in the endpoint asset in ML studio (as shown in the screenshot below). After executing [```endpoint.py```](endpoint.py), the json output from the model was returned ```{"result": ["yes", "no"]}``` as shown below:
+![diagram](img/model_interaction.png)
+
+To benchmark the endpoint, Apache bench was used. Apache bench is an easy and popular tool for benchmarking HTTP services. 
+The [```benchmark.sh```](benchmark.sh) was provided and we had to modify the ```key``` and the ```scoring_uri```.  The  script ```benchmark.sh``` doesn't have much code, however, the Apache Benchmark (ab) command line tool must be installed. The script will run 10 requests ```-n 10``` and the verbosity was set to 4 ```-v 4```. The script uses ```data.json``` which was saved from the output ```endpoint.py``` and the ```-T 'application/json``` spcifies that its sending it a json application. The result as shown in the screenshot below: 
+
+![diagram](img/apache_benchmark_output_1.png)
+![diagram](img/apache_benchmark_output_2.png)
 
 
-* **Enable Logging**
+### **Creating, publishing, and Consuming a pipeline**
 
 
-* **Swagger Documentation**
-
-
-* **Consuming Model Endpoint**
-
-
-* **Creation, publishing, and Consuming a pipeline**
-
-
-* **Documentation**
+### **Documentation**
 
 
 ## Screen Recording
