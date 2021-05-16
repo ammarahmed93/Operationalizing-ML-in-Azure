@@ -93,10 +93,10 @@ Once the pipeline experiment was created, the second step was publishing it. Thi
 Clicking on the experiment pipeline takes to the following page where it shows us the actual pipeline (dataset module connected to the automl module).
 ![diagram](img/bankMarketing_with_automl.PNG)
 
-Published Pipeline showing status and REST endpoint:
+To check the status and REST endpoint of the published Pipeline, we can go to Pipeline>Pipeline endpoints and then click on the pipeline which takes us the following page where it shows the status as active and the REST endpoints.  
 ![diagram](img/published_pipeline.PNG)
 
-RunDetails Widget:
+The RunDetails Widget help us to track the progress and shows the details of the run within the notebook:
 ![diagram](img/runDetails_widget.PNG)
 
 ![diagram](img/complete_pipeline.PNG)
