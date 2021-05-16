@@ -15,7 +15,7 @@ In this project, we build and deploy an ML model in Azure ML studio and then con
 The dataset provided contains data related to a direct marketing campaign for a bank. This is a binary classification problem with the goal to predict if a client will subsrcibe a term deposit or not. However, the goal of this project is to get familiar with deployment and consuming the ML model rather than focsuing on building the most accurate model for the classification task. There are 20 features (columns) in total which includes customers age, job, maritual...etc. and the target column "y" which is a "Yes" or "No". The original dataset can be found [here](https://archive.ics.uci.edu/ml/datasets/bank+marketing).
 
 ## Architectural Diagram
-*TODO*: Provide an architectual diagram of the project and give an introduction of each step. An architectural diagram is an image that helps visualize the flow of operations from start to finish. In this case, it has to be related to the completed project, with its various stages that are critical to the overall flow. For example, one stage for managing models could be "using Automated ML to determine the best model". 
+![diagram](img/overview.png)
 
 
 ## Key Steps
@@ -49,7 +49,7 @@ After the experiment run was completed, the best model _VotingEnsemble_ was depl
 
 
 ### **Enable Logging**
-Although it was possible to enable application insights at deplot time with a check-box, it is useful to be able to run a code that will enable it for us. The [logs.py](logs.py) was used to enable the application insights, however, we have to download the _config.json_ file from ML studio and place it within the same directory as logs.py before runing the python script. The following screenshots shows the output after runing logs.py the application insights on ML studio is enabled. 
+Although it was possible to enable application insights at deplot time with a check-box, it is useful to be able to run a code that will enable it for us. The [```logs.py```](logs.py) was used to enable the application insights.  The following screenshots shows the output after runing logs.py the application insights on ML studio is enabled. 
 ![diagram](img/logs.py_output_1.png)
 ![diagram](img/logs.py_output_2.png)
 ![diagram](img/enabled_application_insights.png)
@@ -68,25 +68,48 @@ To interact with the deployed model, the endpoint.py script was created. The ```
 ![diagram](img/model_interaction.png)
 
 To benchmark the endpoint, Apache bench was used. Apache bench is an easy and popular tool for benchmarking HTTP services. 
-The [```benchmark.sh```](benchmark.sh) was provided and we had to modify the ```key``` and the ```scoring_uri```.  The  script ```benchmark.sh``` doesn't have much code, however, the Apache Benchmark (ab) command line tool must be installed. The script will run 10 requests ```-n 10``` and the verbosity was set to 4 ```-v 4```. The script uses ```data.json``` which was saved from the output ```endpoint.py``` and the ```-T 'application/json``` spcifies that its sending it a json application. The result as shown in the screenshot below: 
+The [```benchmark.sh```](benchmark.sh) was provided and we had to modify the ```key``` and the ```scoring_uri```.  The  script ```benchmark.sh``` doesn't have much code, however, the Apache Benchmark (ab) command line tool must be installed. The script will run 10 requests (```-n 10```) and the verbosity was set to 4 (```-v 4```). The script uses ```data.json``` which was saved from the output ```endpoint.py``` and the ```-T 'application/json``` spcifies that its sending it a json application. The result as shown in the screenshot below: 
 
-![diagram](img/apache_benchmark_output_1.png)
-![diagram](img/apache_benchmark_output_2.png)
+![diagram](img/apache_benchmark_output_1.PNG)
+![diagram](img/apache_benchmark_output_2.PNG)
 
 
 ### **Creating, publishing, and Consuming a pipeline**
+In this part of the project, the jupyter notebook [```aml-pipelines-with-automated-machine-learning-step.ipynb```](aml-pipelines-with-automated-machine-learning-step.ipynb) was provided to us. The notebook had to be modifyed by updating the variables to match the environment created in part 1 (i.e same dataset, compute cluster, keys...etc). The goal of this part is to createm publish and consume a pipeline using the Azure Python SDK.
+The ```config.json``` was downloaded from ML studio and place it within the same working directory.
+
+![diagram](img/pipeline_experiment_created.png)
+
+![diagram](img/pipeline_endpoint.png)
 
 
-### **Documentation**
+![diagram](img/bankMarketing_with_automl.png)
+
+Published Pipeline showing status and REST endpoint:
+![diagram](img/published_pipeline.png)
+
+RunDetails Widget:
+![diagram](img/runDetails_widget.png)
+
+![diagram](img/complete_pipeline.png)
+
 
 
 ## Screen Recording
-*TODO* Provide a link to a screen recording of the project in action. Remember that the screencast should demonstrate:
-
-
+Link to a screen recording of the project in action:
+https://drive.google.com/file/d/1XEvccFEe7iLalcp977vabsH167HsVHAd/view?usp=sharing
 
 ## Future work
+* The data is currently imbalance as shown in the figure below. This could be a problem for most models. For future work, we can try to upsample minority class through SMOTE or downsample the majority class.
 
+* Another improvement could be trying to fine tune the hyperparameter for the HyperDrive run by using the Grid sampling. Experimenting with max iteration (increase the value) for the logistic regression as well as experimenting with early stopping could potentially yield to a better HyperDrive model.
 
-## References
+* Experimentation can ran for longer duration by increasing the time limit (experiment_timeout_minutes) in the AutoML configuration. Similarly, we can increase the value of max_total_runs in the HyperDrive to increase the duration of the experiment. Increasing the duration of the experiment would potentially yield to a better model score.
+
+* Range of the HyperDrive paramter can be increased allowing wider selection of paramter would potentialy yield to a better results for the HyperDrive model.
+
+* Inculde Deep Learning algorithm in the AutoML configuration to allow wider selection of algorithm to evaluate the accuracy.
+
+* Compute time of the expriments can be improved by adding more CPU cluster to compute cluster instance or configurating a GPU cluster.
+
 
