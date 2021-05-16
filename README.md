@@ -42,14 +42,22 @@ After that a new compute cluster was setup using the _Standard_DS12_v2_ selectio
 ![diagram](img/automl_experiment.png)
 The experiment runs for about 15 mins and then once it was completed the best model was selected for deployment:
 ![diagram](img/completed_automl.png)
+From the screenshot above, it shows in the right column the best model summary (VotingEnsemble). <br>
+Going into the models tab, it takes us to the following page where it shows all trained models and the best model as well.
 ![diagram](img/best_model.png)
 
 ### **Deploying the best model**
-After the experiment run was completed, the best model _VotingEnsemble_ was deployed using Azure Container Instance (ACI). Deploying the model in Azure allows us to interact with the HTTP API service and interact with the model by sending data over  POST request. 
+After the experiment run was completed, the best model _VotingEnsemble_ was deployed using Azure Container Instance (ACI). Deploying the model in Azure allows us to interact with the HTTP API service and interact with the model by sending data over  POST request. To deploy the best model, it can be perfromed by clicking on the model name in the "Best model summary" or by going into the models section and select the model. Once the model is being selected, it takes to the details for that specifc model and the deploy tab would be avaiable as well as it can be seen in the screenshot below:
+![diagram](img/deploy_model.png)
+Going into the endpoint in the assets, we can see all of the models that are deployed.
+![diagram](img/deployed_model_1.png)
+Clicking on it shows us the detail for the endpoint and deplyment status, in which in this case it shows it as healthy which indicates that the endpoint is available for users to interact with. 
+![diagram](img/deployed_model_2.png)
+
 
 
 ### **Enable Logging**
-Although it was possible to enable application insights at deplot time with a check-box, it is useful to be able to run a code that will enable it for us. The [```logs.py```](logs.py) was used to enable the application insights.  The following screenshots shows the output after runing logs.py the application insights on ML studio is enabled. 
+Logging and application insights is very important for deployment as it provides additinal information beyond error massgaes, which can help in troubleshooting API calls to the endpoint. To enable application insights, it can be performed at deploy time with a check-box, however, it is useful to be able to run a code that will enable it for us. The [```logs.py```](logs.py) was used to enable the application insights.  The following screenshots shows the output after runing logs.py the application insights on ML studio is enabled. 
 ![diagram](img/logs.py_output_1.png)
 ![diagram](img/logs.py_output_2.png)
 ![diagram](img/enabled_application_insights.png)
@@ -77,12 +85,12 @@ The [```benchmark.sh```](benchmark.sh) was provided and we had to modify the ```
 ### **Creating, publishing, and Consuming a pipeline**
 In this part of the project, the jupyter notebook [```aml-pipelines-with-automated-machine-learning-step.ipynb```](aml-pipelines-with-automated-machine-learning-step.ipynb) was provided to us. The notebook had to be modifyed by updating the variables to match the environment created in part 1 (i.e same dataset, compute cluster, keys...etc). The goal of this part is to createm publish and consume a pipeline using the Azure Python SDK.
 The ```config.json``` was downloaded from ML studio and place it within the same working directory.
-
+The screenshot below shows the pipeline experiment that was created in jupyter notebook.
 ![diagram](img/pipeline_experiment_created.PNG)
-
+Once the pipeline experiment was created, the second step was publishing it. This was done within the notebook and it was then verified by going into the "pipeline endpoints" tab in pipeline in the assets.
 ![diagram](img/pipeline_endpoint.PNG)
 
-
+Clicking on the experiment pipeline takes to the following page where it shows us the actual pipeline (dataset module connected to the automl module).
 ![diagram](img/bankMarketing_with_automl.PNG)
 
 Published Pipeline showing status and REST endpoint:
