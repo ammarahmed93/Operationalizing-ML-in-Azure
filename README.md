@@ -65,7 +65,7 @@ Opening the brower and going to the localhost:9000 will open up the swagger samp
 
 ### **Consuming Model Endpoint**
 To interact with the deployed model, the endpoint.py script was created. The ```scoring_uri``` and the ```key``` must match the _REST_endpoint_ and _primary key_ in the consume tab in the endpoint asset in ML studio (as shown in the screenshot below). After executing [```endpoint.py```](endpoint.py), the json output from the model was returned ```{"result": ["yes", "no"]}``` as shown below:
-![diagram](img/model_interaction.png)
+![diagram](img/model_interaction.PNG)
 
 To benchmark the endpoint, Apache bench was used. Apache bench is an easy and popular tool for benchmarking HTTP services. 
 The [```benchmark.sh```](benchmark.sh) was provided and we had to modify the ```key``` and the ```scoring_uri```.  The  script ```benchmark.sh``` doesn't have much code, however, the Apache Benchmark (ab) command line tool must be installed. The script will run 10 requests (```-n 10```) and the verbosity was set to 4 (```-v 4```). The script uses ```data.json``` which was saved from the output ```endpoint.py``` and the ```-T 'application/json``` spcifies that its sending it a json application. The result as shown in the screenshot below: 
@@ -78,20 +78,20 @@ The [```benchmark.sh```](benchmark.sh) was provided and we had to modify the ```
 In this part of the project, the jupyter notebook [```aml-pipelines-with-automated-machine-learning-step.ipynb```](aml-pipelines-with-automated-machine-learning-step.ipynb) was provided to us. The notebook had to be modifyed by updating the variables to match the environment created in part 1 (i.e same dataset, compute cluster, keys...etc). The goal of this part is to createm publish and consume a pipeline using the Azure Python SDK.
 The ```config.json``` was downloaded from ML studio and place it within the same working directory.
 
-![diagram](img/pipeline_experiment_created.png)
+![diagram](img/pipeline_experiment_created.PNG)
 
-![diagram](img/pipeline_endpoint.png)
+![diagram](img/pipeline_endpoint.PNG)
 
 
-![diagram](img/bankMarketing_with_automl.png)
+![diagram](img/bankMarketing_with_automl.PNG)
 
 Published Pipeline showing status and REST endpoint:
-![diagram](img/published_pipeline.png)
+![diagram](img/published_pipeline.PNG)
 
 RunDetails Widget:
-![diagram](img/runDetails_widget.png)
+![diagram](img/runDetails_widget.PNG)
 
-![diagram](img/complete_pipeline.png)
+![diagram](img/complete_pipeline.PNG)
 
 
 
