@@ -31,13 +31,14 @@ Since the lab provided was through Udacity VM, this step was not performed. Howe
 3. Interactive:
 * Used by local deployment and experimentation (e.g. using Jupyter notebook)
 
-* Service Principal: A user role with controlled permissions to access specific resources. This enables a continous delivery platform to authenticate services needed to train models. 
+
+**Service Principal**: A user role with controlled permissions to access specific resources. This enables a continous delivery platform to authenticate services needed to train models. 
 
 
 ### **Automated ML Experiment**
-At first the data needed to be uploaded and registered: 
+At the beginning, the data needed to be uploaded and registered: 
 ![diagram](img/registerd_dataset.png)
-After that a new compute cluster was setup using the _Standard_DS12_v2_ selection.  Then the AutoML experiment was create with the selections as shown in the screenshot below:
+After that, spinning up a new compute cluster using the _Standard_DS12_v2_ selection.  Then the AutoML experiment was create with the selections as shown in the screenshot below:
 ![diagram](img/automl_experiment.png)
 The experiment runs for about 15 mins and then once it was completed the best model was selected for deployment:
 ![diagram](img/completed_automl.png)
@@ -46,7 +47,7 @@ Going into the models tab, it takes us to the following page where it shows all 
 ![diagram](img/best_model.png)
 
 ### **Deploying the best model**
-After the experiment run was completed, the best model _VotingEnsemble_ was deployed using Azure Container Instance (ACI). Deploying the model in Azure allows us to interact with the HTTP API service and interact with the model by sending data over  POST request. To deploy the best model, it can be perfromed by clicking on the model name in the "Best model summary" or by going into the models section and select the model. Once the model is being selected, it takes to the details for that specifc model and the deploy tab would be avaiable as well as it can be seen in the screenshot below:
+After the experiment run was completed, the best model _VotingEnsemble_ was deployed using Azure Container Instance (ACI). Deploying the model in Azure allows us to interact with the HTTP API service and interact with the model by sending data over  POST request. To deploy the best model, it can be perfromed by clicking on the model name in the "Best model summary" or by going into the models section and select the model. Once the model is being selected, it takes us to the details for that specifc model and the deploy tab would be available as well as it can be seen in the screenshot below:
 ![diagram](img/deploy_model.png)
 Going into the endpoint in the assets, we can see all of the models that are deployed.
 ![diagram](img/deployed_model_1.png)
