@@ -38,7 +38,7 @@ Since the lab provided was through Udacity VM, this step was not performed. Howe
 ### **Automated ML Experiment**
 At the beginning, the data needed to be uploaded and registered: 
 ![diagram](img/registerd_dataset.png)
-After that, spinning up a new compute cluster using the _Standard_DS12_v2_ selection.  Then the AutoML experiment was create with the selections as shown in the screenshot below:
+After that, spinning up a new compute cluster using the _Standard_DS12_v2_ selection.  Then the AutoML experiment was created with the selections as shown in the screenshot below:
 ![diagram](img/automl_experiment.png)
 The experiment runs for about 15 mins and then once it was completed the best model was selected for deployment:
 ![diagram](img/completed_automl.png)
@@ -57,7 +57,7 @@ Clicking on it shows us the detail for the endpoint and deplyment status, in whi
 
 
 ### **Enable Logging**
-Logging and application insights is very important for deployment as it provides additinal information beyond error massgaes, which can help in troubleshooting API calls to the endpoint. To enable application insights, it can be performed at deploy time with a check-box, however, it is useful to be able to run a code that will enable it for us. The [```logs.py```](logs.py) was used to enable the application insights.  The following screenshots shows the output after runing logs.py the application insights on ML studio is enabled. 
+Logging and application insights is very important for deployment as it provides additinal information beyond error messages, which can help in troubleshooting API calls to the endpoint. To enable application insights, it can be performed at deploy time with a check-box, however, it is useful to be able to run a code that will enable it for us. The [```logs.py```](logs.py) was used to enable the application insights.  The following screenshots shows the output after runing logs.py the application insights on ML studio is enabled. 
 ![diagram](img/logs.py_output_1.png)
 ![diagram](img/logs.py_output_2.png)
 ![diagram](img/enabled_application_insights.png)
@@ -66,24 +66,24 @@ Homepage of the application insights where it shows different metrics such as fa
 
 ### **Swagger Documentation**
 In this step, we consume the deployed model using Swagger. Azure provides a Swagger JSON link which can be downloaded through _curl_ or _wget_. Once the swagger.json was downloaded it was placed within the same directory "swagger". Running [```swagger.sh```](swagger.sh) will download the latest swagger container and it will run it on port 80. After that, the [```serve.py```](serve.py) script was run which starts a python server on port 8000. 
-Opening the brower and going to the localhost:9000 will open up the swagger sample. By typing _http://localhost:8000/swagger.json_ will display the contents of the API for our model:
+Opening the brower and going to the localhost:9000 will open up the swagger sample. By typing _http://localhost:8000/swagger.json_ in the swagger search bar will display the contents of the API for our model:
 ![diagram](img/swagger_api.png)
 ![diagram](img/get_request.png)
 ![diagram](img/post_request.png)
 
 ### **Consuming Model Endpoint**
-To interact with the deployed model, the endpoint.py script was created. The ```scoring_uri``` and the ```key``` must match the _REST_endpoint_ and _primary key_ in the consume tab in the endpoint asset in ML studio (as shown in the screenshot below). After executing [```endpoint.py```](endpoint.py), the json output from the model was returned ```{"result": ["yes", "no"]}``` as shown below:
+To interact with the deployed model, the [```endpoint.py```](endpoint.py) script was created. The ```scoring_uri``` and the ```key``` must match the _REST_endpoint_ and _primary key_ in the consume tab in the endpoint asset in ML studio (as shown in the screenshot below). After executing [```endpoint.py```](endpoint.py), the json output from the model was returned ```{"result": ["yes", "no"]}``` as shown below:
 ![diagram](img/model_interaction.PNG)
 
 To benchmark the endpoint, Apache bench was used. Apache bench is an easy and popular tool for benchmarking HTTP services. 
-The [```benchmark.sh```](benchmark.sh) was provided and we had to modify the ```key``` and the ```scoring_uri```.  The  script ```benchmark.sh``` doesn't have much code, however, the Apache Benchmark (ab) command line tool must be installed. The script will run 10 requests (```-n 10```) and the verbosity was set to 4 (```-v 4```). The script uses ```data.json``` which was saved from the output ```endpoint.py``` and the ```-T 'application/json``` spcifies that its sending it a json application. The result as shown in the screenshot below: 
+The [```benchmark.sh```](benchmark.sh) was provided and we had to modify the ```key``` and the ```scoring_uri```.  The  script ```benchmark.sh``` doesn't have much code, however, the Apache Benchmark (ab) command line tool must be installed. The script will run 10 requests (```-n 10```) and the verbosity was set to 4 (```-v 4```). The script uses ```data.json``` which was saved from the output ```endpoint.py``` and the ```-T 'application/json``` spcifies that its sending it a json application. The result from running Apache Benchmark is shown in the screenshot below: 
 
 ![diagram](img/apache_benchmark_output_1.PNG)
 ![diagram](img/apache_benchmark_output_2.PNG)
 
 
 ### **Creating, publishing, and Consuming a pipeline**
-In this part of the project, the jupyter notebook [```aml-pipelines-with-automated-machine-learning-step.ipynb```](aml-pipelines-with-automated-machine-learning-step.ipynb) was provided to us. The notebook had to be modifyed by updating the variables to match the environment created in part 1 (i.e same dataset, compute cluster, keys...etc). The goal of this part is to createm publish and consume a pipeline using the Azure Python SDK.
+In this part of the project, the jupyter notebook [```aml-pipelines-with-automated-machine-learning-step.ipynb```](aml-pipelines-with-automated-machine-learning-step.ipynb) was provided to us. The notebook had to be modifyed by updating the variables to match the environment created in part 1 (i.e same dataset, compute cluster, keys...etc). The goal of this part is to create publish and consume a pipeline using the Azure Python SDK.
 The ```config.json``` was downloaded from ML studio and place it within the same working directory.
 The screenshot below shows the pipeline experiment that was created in jupyter notebook.
 ![diagram](img/pipeline_experiment_created.PNG)
@@ -105,12 +105,6 @@ The RunDetails Widget help us to track the progress and shows the details of the
 
 ## Future work
 * The data is currently imbalance as shown in the figure below. This could be a problem for most models. For future work, we can try to upsample minority class through SMOTE or downsample the majority class.
-
-* Another improvement could be trying to fine tune the hyperparameter for the HyperDrive run by using the Grid sampling. Experimenting with max iteration (increase the value) for the logistic regression as well as experimenting with early stopping could potentially yield to a better HyperDrive model.
-
-* Experimentation can ran for longer duration by increasing the time limit (experiment_timeout_minutes) in the AutoML configuration. Similarly, we can increase the value of max_total_runs in the HyperDrive to increase the duration of the experiment. Increasing the duration of the experiment would potentially yield to a better model score.
-
-* Range of the HyperDrive paramter can be increased allowing wider selection of paramter would potentialy yield to a better results for the HyperDrive model.
 
 * Inculde Deep Learning algorithm in the AutoML configuration to allow wider selection of algorithm to evaluate the accuracy.
 
