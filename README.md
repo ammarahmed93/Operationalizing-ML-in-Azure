@@ -6,7 +6,6 @@
 * [Key Steps](#Key-Steps)
 * [Screen Recording](#Screen-Recording)
 * [Future work](#Future-work)
-* [References](#References)
 
 
 ## Overview
@@ -102,10 +101,6 @@ The RunDetails Widget help us to track the progress and shows the details of the
 ![diagram](img/complete_pipeline.PNG)
 
 
-
-## Screen Recording
-Link to a screen recording of the project in action:
-https://drive.google.com/file/d/1XEvccFEe7iLalcp977vabsH167HsVHAd/view?usp=sharing
 
 ## Future work
 * The data is currently imbalance as shown in the figure below. This could be a problem for most models. For future work, we can try to upsample minority class through SMOTE or downsample the majority class.
