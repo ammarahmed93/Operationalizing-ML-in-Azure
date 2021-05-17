@@ -1,5 +1,6 @@
 # Operationalizing ML in Azure
-
+[![Azure](https://img.shields.io/badge/Azure-MLOps-blue)](https://www.udacity.com/course/machine-learning-engineer-for-microsoft-azure-nanodegree--nd00333)
+[![Udacity](https://img.shields.io/badge/Udacity-Operationalizing%20ML-blue)](https://www.udacity.com/course/machine-learning-engineer-for-microsoft-azure-nanodegree--nd00333)
 ## Table of contents
 * [Overview](#Overview)
 * [Architectural Diagram](#Architectural-Diagram)
